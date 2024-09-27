@@ -1,0 +1,81 @@
+{% extends 'base.html'%} {%load widget_tweaks%} {% block content%}
+
+<div class="row justify-content-center">
+    <div class="col-md-5 mx-3">
+        <h1 class="display-3 fw-bold lh-1 mb-3 text-secondary">
+            Page de Souscription
+        </h1>
+        <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit
+            illum, voluptatem doloremque hic nisi ipsum eum, fuga possimus
+            perspiciatis expedita, corrupti beatae delectus vero sit molestias
+            nostrum aliquid quae magnam?
+        </p>
+    </div>
+    <div class="col-md-4 mx-3">
+        <form
+            class="p-4 p-md-5 border rounded-4 shadow-lg p-3 mb-5 bg-white rounded bg-white"
+            method="POST"
+        >
+            {%csrf_token%}
+            <div class="mb-3">
+                <label for="floatingInput" class="form-label"
+                    >Nom d'utilisateur</label
+                >
+                <!-- {% render_field form.username class="form-control" %} -->
+
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    id="floatingInput"
+                />
+            </div>
+            <div class="mb-3">
+                <label for="floatingInput" class="form-label">Email</label>
+                <!-- {% render_field form.email class="form-control" %} -->
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    id="floatingInput"
+                />
+            </div>
+            <div class="mb-3">
+                <label for="floatingInput" class="form-label"
+                    >Mot de passe</label
+                >
+                <!-- {% render_field form.password1 class="form-control" %} -->
+                <input
+                    type="password"
+                    name="password1"
+                    class="form-control"
+                    id="floatingInput"
+                />
+            </div>
+            <div class="mb-3">
+                <label for="floatingInput" class="form-label"
+                    >Confirmation</label
+                >
+                <!-- {% render_field form.password2 class="form-control" %} -->
+                <input
+                    type="password"
+                    name="password2"
+                    class="form-control"
+                    id="floatingInput"
+                />
+            </div>
+
+            <button type="submit" class="btn b btn-outline-success">
+                Sign up
+            </button>
+            <hr />
+            <small class="text-muted"
+                >Vous etes déjà souscrit?
+                <a href="{% url 'login'%}"> Authentification</a></small
+            >
+        </form>
+    </div>
+</div>
+
+{%endblock content%}
