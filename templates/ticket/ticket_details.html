@@ -1,0 +1,93 @@
+{% extends 'base.html'%} {% block content%}
+<div class="container">
+    <div class="border p-4 bg-light shadow-lg mb-5 bg-white rounded">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="px-5">
+                    <h3 class="display-4 fw-bold lh-1 mb-3 text-secondary">
+                        {{ ticket.title}}
+                    </h3>
+
+                    {% if ticket.ticket_status == 'Pending' %}
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-warning rounded-4"
+                    >
+                        <span class="badge badge-light">Pending</span>
+                    </button>
+                    {% elif ticket.ticket_status == 'Active' %}
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-success rounded-4"
+                    >
+                        <span class="badge badge-light">Active</span>
+                    </button>
+                    {% elif ticket.ticket_status == 'Resolved' %}
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-primary rounded-4"
+                    >
+                        <span class="badge badge-light">Resolved</span>
+                    </button>
+
+                    {% endif %}
+                    <br />
+                    <br />
+                    <br />
+                    <p>{{ticket.description}}</p>
+                </div>
+            </div>
+            <div
+                class="col-md-4 border mx-3 shadow-lg p-4 mb-5 bg-white rounded"
+            >
+                <h4 class="display-6 lh-1 mb-3 text-secondary">Quick info</h4>
+                <p>
+                    <small>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Nulla recusandae atque, minima consequuntur, facere
+                        officia itaque natus illum.re
+                    </small>
+                    <br />
+                    <small class="text-muted">
+                        <a href="{% url 'update-ticket' ticket.id%}"
+                            >Modifier</a
+                        >
+                    </small>
+                </p>
+                <div>
+                    <small>
+                        <b>Numero ticket</b>: {{ticket.ticket_number}}
+                    </small>
+                    <br />
+                    <small> <b>Créer par</b>: {{ticket.created_by}} </small>
+                    <br />
+
+                    <small> <b>Créé le</b>: {{ticket.date_created}} </small>
+                    <br />
+                    <small> <b>Modifié le</b>: {{ticket.date_updated}} </small>
+                    <br />
+                    <small> <b>Assigné à</b>: {{ticket.assigned_to}} </small>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 
+    {% if ticket.resolution%}
+    <div class="card">
+        <div class="card-body shadow-sm">
+            <small> <b>Résolution</b>: </small>
+            <br />
+            <small>{{ticket.resolution}}</small>
+            <p />
+        </div>
+    </div>
+    {% elif request.user.is_engineer %}
+    <div class="px-5 mt-5">
+        <a href="{% url 'resolve-ticket' ticket.ticket_id%}">
+            <button class="btn btn-outline-info">Mark as resolved</button>
+        </a>
+    </div>
+</div> -->
+    {% endif %} {%endblock content%}
+</div>
