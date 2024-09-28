@@ -1,7 +1,6 @@
 {% extends 'base.html'%} {%block content%}
 <div class="container">
     <div class="jumbotron">
-        {% if request.user.is_customer%}
         <h1 class="display-3 fw-bold lh-1 text-secondary">
             <b>Page d'Accueil</b>
         </h1>
@@ -28,11 +27,13 @@
         </p>
         <br />
         <p class="lead">
-            <a href="#" class="btn btn-outline-warning" role="button"
+            <a
+                href="{% url 'create-ticket' %}"
+                class="btn btn-outline-warning"
+                role="button"
                 >Faire une réclamation</a
             >
         </p>
-        {% endif %}
     </div>
 </div>
 {%endblock content%} P
