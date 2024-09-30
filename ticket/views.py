@@ -61,21 +61,32 @@ def active_tickets(request):
     context = {'tickets': tickets}
     return render(request, 'ticket/active_tickets.html', context)
 
+# resolved tickets
+def resolve_tickets(request, pk):
+    ticket = Ticket.objects.get(pk=pk)
+    context = {'ticket': ticket}
+    ticket.ticket_status = 'Completed'
+    ticket_accepted_date =  datetime.datetime.now()
+    ticket.save()
+    messages.success(request, f'Le ticket a été cloôturé par {request.user}')
+    return redirect('ticket-queue')
+    
+
 """ For Engineer """
 
 # ticket queue
 def ticket_queue(request):
-    tickets =  Ticket.objects.filter(ticket_status='Pending')
+    tickets =  Ticket.objects.all().exclude(ticket_status='Completed')
     context = {'tickets': tickets}
     return render(request, 'ticket/ticket_queue.html', context)
 
 # assign_ticket
-def assign_ticket(request, pk):
+def accept_ticket(request, pk):
     ticket = Ticket.objects.get(pk=pk)
-    ticket.assigned = request.user
+    ticket.assigned_to = request.user
     ticket.ticket_status = 'Active'
     ticket.accepted_date = datetime.datetime.now()
     ticket.save()
-    messages.success(request, f'Le ticket a été assigné à {request.user}')
+    messages.success(request, f'Le ticket a été pris en charge par {request.user}')
     return redirect('ticket-queue')
      

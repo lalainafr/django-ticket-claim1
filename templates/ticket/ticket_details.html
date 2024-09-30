@@ -72,8 +72,8 @@
             </div>
         </div>
     </div>
-    <!-- 
-    {% if ticket.resolution%}
+    <
+    <!-- {% if ticket.resolution%}
     <div class="card">
         <div class="card-body shadow-sm">
             <small> <b>Résolution</b>: </small>
@@ -83,11 +83,12 @@
         </div>
     </div>
     {% elif request.user.is_engineer %}
+</div>
+    {% endif %} {%endblock content%}
+</div> -->
     <div class="px-5 mt-5">
         <a href="{% url 'resolve-ticket' ticket.ticket_id%}">
             <button class="btn btn-outline-info">Mark as resolved</button>
         </a>
     </div>
-</div> -->
-    {% endif %} {%endblock content%}
 </div>

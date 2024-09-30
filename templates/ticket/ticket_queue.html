@@ -44,13 +44,19 @@
                         {% endif %}
                         <td class="text-center">{{ticket.ticket_status}}</td>
                         <td class="text-center">
-                            <a href="{% url 'assign-ticket' ticket.id %}">
+                            {% if ticket.ticket_status == 'Pending' %}
+                            <a href="{% url 'accept-ticket' ticket.id %}">
                                 <button
                                     class="btn btn-sm btn-outline-primary rounded-4"
                                 >
                                     Accept
                                 </button>
                             </a>
+                            {% else %}
+                            <button class="btn btn-sm btn-success rounded-4">
+                                Traité.
+                            </button>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
