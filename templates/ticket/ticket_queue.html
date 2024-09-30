@@ -11,7 +11,7 @@
     <br /><br />
 </p>
 <div>
-    <div class="card shadow-lg p-3 mb-5">
+    <div class="card shadow-lg p-2 mb-5">
         <div class="card-body">
             <table class="table">
                 <thead>
@@ -36,15 +36,15 @@
                             </small>
                         </td>
                         <td>{{ticket.title}}</td>
-                        <td>{{ticket.date_created}}</td>
+                        <td class="text-center">{{ticket.date_created}}</td>
                         {% if ticket.assigned_to %}
-                        <td>{{ticket.assigned_to}}</td>
+                        <td class="text-center">{{ticket.assigned_to}}</td>
                         {% else %}
-                        <td>None</td>
+                        <td class="text-center">None</td>
                         {% endif %}
-                        <td>{{ticket.ticket_status}}</td>
+                        <td class="text-center">{{ticket.ticket_status}}</td>
                         <td class="text-center">
-                            <a>
+                            <a href="{% url 'assign-ticket' ticket.id %}">
                                 <button
                                     class="btn btn-sm btn-outline-primary rounded-4"
                                 >

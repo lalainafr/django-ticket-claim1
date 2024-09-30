@@ -3,6 +3,7 @@ from users.models import User
 from .form import CreateTicketForm, UpdateTicketForm
 from django.contrib import messages
 from .models import Ticket
+import datetime
 
 """ For All """
 
@@ -67,3 +68,14 @@ def ticket_queue(request):
     tickets =  Ticket.objects.filter(ticket_status='Pending')
     context = {'tickets': tickets}
     return render(request, 'ticket/ticket_queue.html', context)
+
+# assign_ticket
+def assign_ticket(request, pk):
+    ticket = Ticket.objects.get(pk=pk)
+    ticket.assigned = request.user
+    ticket.ticket_status = 'Active'
+    ticket.accepted_date = datetime.datetime.now()
+    ticket.save()
+    messages.success(request, f'Le ticket a été assigné à {request.user}')
+    return redirect('ticket-queue')
+     
