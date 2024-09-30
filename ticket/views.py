@@ -59,4 +59,11 @@ def active_tickets(request):
     tickets = Ticket.objects.filter(created_by=request.user)
     context = {'tickets': tickets}
     return render(request, 'ticket/active_tickets.html', context)
-    
+
+""" For Engineer """
+
+# ticket queue
+def ticket_queue(request):
+    tickets =  Ticket.objects.filter(ticket_status='Pending')
+    context = {'tickets': tickets}
+    return render(request, 'ticket/ticket_queue.html', context)
