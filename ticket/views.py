@@ -76,11 +76,11 @@ def resolve_tickets(request, pk):
 
 # ticket queue
 def ticket_queue(request):
-    tickets =  Ticket.objects.all().exclude(ticket_status='Completed')
+    tickets =  Ticket.objects.all()
     context = {'tickets': tickets}
     return render(request, 'ticket/ticket_queue.html', context)
 
-# assign_ticket
+# assign ticket
 def accept_ticket(request, pk):
     ticket = Ticket.objects.get(pk=pk)
     ticket.assigned_to = request.user
@@ -88,5 +88,15 @@ def accept_ticket(request, pk):
     ticket.accepted_date = datetime.datetime.now()
     ticket.save()
     messages.success(request, f'Le ticket a été pris en charge par {request.user}')
+    return redirect('ticket-queue')
+
+# resolve ticket
+def resolve_ticket(request, pk):
+    ticket = Ticket.objects.get(pk=pk)
+    ticket.is_resolved =  True
+    ticket.ticket_status = 'Completed'
+    ticket.closed_date = datetime.datetime.now()
+    ticket.save()
+    messages.success(request, f'Le ticket a été cloturé par {request.user}')
     return redirect('ticket-queue')
      

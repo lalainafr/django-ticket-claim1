@@ -22,7 +22,7 @@
                     >
                         <span class="badge badge-light">Active</span>
                     </button>
-                    {% elif ticket.ticket_status == 'Resolved' %}
+                    {% elif ticket.ticket_status == 'Completed' %}
                     <button
                         type="button"
                         class="btn btn-sm btn-primary rounded-4"
@@ -48,11 +48,14 @@
                         officia itaque natus illum.re
                     </small>
                     <br />
+                    {% if ticket.ticket_status == 'Pending' %}
                     <small class="text-muted">
                         <a href="{% url 'update-ticket' ticket.id%}"
                             >Modifier</a
                         >
                     </small>
+
+                    {% endif %}
                 </p>
                 <div>
                     <small>
@@ -71,8 +74,15 @@
                 </div>
             </div>
         </div>
+        {% if ticket.ticket_status == 'completed'%}
+        <div class="p-5">
+            <a href="{% url 'resolve-ticket' ticket.id%}">
+                <button class="btn btn-outline-info">Mark as resolved</button>
+            </a>
+        </div>
+        {% endif %}
     </div>
-    <
+
     <!-- {% if ticket.resolution%}
     <div class="card">
         <div class="card-body shadow-sm">
@@ -86,9 +96,4 @@
 </div>
     {% endif %} {%endblock content%}
 </div> -->
-    <div class="px-5 mt-5">
-        <a href="{% url 'resolve-ticket' ticket.ticket_id%}">
-            <button class="btn btn-outline-info">Mark as resolved</button>
-        </a>
-    </div>
 </div>
