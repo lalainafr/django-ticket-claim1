@@ -11,7 +11,11 @@ def register_user(request):
         form = ResigterUserForm(request.POST)
         if form.is_valid():
             var = form.save(commit=False)
-            var.is_customer = True
+            if var.is_engineer:
+                var.is_engineer =  True
+            else:
+                var.is_customer =  True
+    
             var.save()
             messages.success(request, 'Votre compte a été créé avec succès. Merci de vous authentifier...')
             return redirect('login')
