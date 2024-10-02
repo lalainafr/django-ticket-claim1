@@ -4,6 +4,8 @@ from .form import CreateTicketForm, UpdateTicketForm
 from django.contrib import messages
 from .models import Ticket
 import datetime
+from django.contrib.auth.decorators import login_required
+
 
 """ For All """
 
@@ -57,9 +59,15 @@ def update_ticket(request, pk):
     
 # active tickets
 def active_tickets(request):
-    tickets = Ticket.objects.filter(created_by=request.user)
+    tickets = Ticket.objects.filter(created_by=request.user, is_resolved = False)
     context = {'tickets': tickets}
     return render(request, 'ticket/active_tickets.html', context)
+
+# closed tickets
+def closed_tickets(request):
+    tickets = Ticket.objects.filter(created_by=request.user, is_resolved = True)
+    context = {'tickets': tickets}
+    return render(request, 'ticket/closed_tickets.html', context)
 
 # resolved tickets
 def resolve_tickets(request, pk):
@@ -68,17 +76,32 @@ def resolve_tickets(request, pk):
     ticket.ticket_status = 'Completed'
     ticket_accepted_date =  datetime.datetime.now()
     ticket.save()
-    messages.success(request, f'Le ticket a été cloôturé par {request.user}')
+    messages.success(request, f'Le ticket a été clôturé par {request.user}')
     return redirect('ticket-queue')
     
 
 """ For Engineer """
 
+
 # ticket queue
+@login_required
 def ticket_queue(request):
     tickets =  Ticket.objects.all()
     context = {'tickets': tickets}
     return render(request, 'ticket/ticket_queue.html', context)
+
+
+# Engineer active ticket
+def engineer_active_tickets(request):
+    tickets =  Ticket.objects.filter(assigned_to= request.user, is_resolved=False)
+    context = {'tickets': tickets}
+    return render(request, 'ticket/engineer_active_tickets.html', context)
+
+# Engineer Closed ticket
+def engineer_closed_tickets(request):
+    tickets =  Ticket.objects.filter(assigned_to= request.user, is_resolved=True)
+    context = {'tickets': tickets}
+    return render(request, 'ticket/engineer_closed_tickets.html', context)
 
 # assign ticket
 def accept_ticket(request, pk):

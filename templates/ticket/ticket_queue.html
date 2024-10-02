@@ -18,9 +18,10 @@
                     <tr class="text-center text-secondary">
                         <th scope="col"># Ticket id</th>
                         <th scope="col">Titre</th>
-                        <th scope="col">Créé le</th>
+                        <th scope="col">Crée par</th>
+                        <th scope="col">Date création</th>
                         <th scope="col">Assigné à</th>
-                        <th scope="col">Statut</th>
+                        <th scope="col">Terminé</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -28,6 +29,7 @@
                 <tbody>
                     <tr>
                         <!-- <th scope="row">1</th> -->
+                        {% if ticket.ticket_status == 'Pending'%}
                         <td class="text-center">
                             <small>
                                 <a href="{% url 'ticket-details' ticket.id %}">
@@ -35,31 +37,69 @@
                                 </a>
                             </small>
                         </td>
-                        <td>{{ticket.title}}</td>
-                        <td class="text-center">{{ticket.date_created}}</td>
-                        {% if ticket.assigned_to %}
-                        <td class="text-center">{{ticket.assigned_to}}</td>
                         {% else %}
-                        <td class="text-center">None</td>
+                        <td class="text-center">
+                            <small>
+                                <p class="text-muted">
+                                    {{ticket.ticket_number}}
+                                </p>
+                            </small>
+                        </td>
+
+                        {% endif%}
+                        <td>
+                            <small>
+                                {{ticket.title}}
+                            </small>
+                        </td>
+                        <td>
+                            <small>
+                                {{ticket.created_by}}
+                            </small>
+                        </td>
+                        <td class="text-center">
+                            <small>
+                                {{ticket.date_created}}</td>
+                            </small>
+                        {% if ticket.assigned_to %}
+                        <td class="text-center">
+                            <small>
+                                {{ticket.assigned_to}}</td>
+                            </small>
+                        {% else %}
+                        <td class="text-center">
+                            <small>
+                                None
+                            </small>    
+                        </td>
                         {% endif %}
-                        <td class="text-center">{{ticket.ticket_status}}</td>
+                        <td class="text-center">
+                            <small>        
+                                
+                                {% if ticket.is_resolved %}
+                                <small>Oui</small>
+                                {% else %}
+                                <small>Non</small>
+                                {% endif %}
+                            </small>
+                        </td>
                         <td class="text-center">
                             {% if ticket.ticket_status == 'Pending' %}
                             <a href="{% url 'accept-ticket' ticket.id %}">
-                                <button
-                                    class="btn btn-sm btn-outline-primary rounded-4"
-                                >
-                                    A traiter
-                                </button>
+
+                                <button type="button" class="btn btn-sm btn-primary rounded-4">
+                                     <span class="badge badge-light">A traiter</span>
+                                  </button>
+                               
                             </a>
                             {% elif ticket.ticket_status == 'Active' %}
-                            <button class="btn btn-sm btn-success rounded-3">
-                                En cours
-                            </button>
+                            <button type="button" class="disabled btn btn-sm btn-success rounded-4">
+                                <span class="badge badge-light">En cours</span>
+                             </button>
                             {% else %}
-                            <button class="btn btn-sm btn-danger rounded-3">
-                                Cloturé
-                            </button>
+                            <button type="button" class="disabled btn btn-sm btn-danger rounded-4">
+                                <span class="badge badge-light">Clôturé</span>
+                             </button>
                             {% endif %}
                         </td>
                     </tr>

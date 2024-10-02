@@ -1,52 +1,139 @@
 {% extends 'base.html'%} {%block content%}
 <div class="container">
-    <div class="jumbotron">
-        <h1 class="display-3 fw-bold lh-1 text-secondary">
-            {% if request.user.is_engineer %}
-            <b>Page d'Accueil INGENIEUR</b>
-            {% else%}
-            <b>Page d'Accueil CLIENT</b>
-            {% endif%}
-        </h1>
-
-        <p class="lead mt-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius autem
-            maiores accusamus debitis expedita, explicabo qui dolores mollitia
-            voluptatem, cum quis sed pariatur perspiciatis obcaecati neque amet
-            quibusdam et deserunt. Ut sunt quisquam ullam, incidunt similique
-            blanditiis! Rerum rem consequuntur eum magni error fugit tempore
-            iusto, ex accusantium, consectetur ipsum iure, voluptatibus
-            quibusdam labore nemo architecto quam voluptatem corrupti
-            distinctio! Consequuntur commodi beatae, eius aspernatur autem
-            ducimus a ad nobis ullam distinctio ab temporibus sint, sit minima
-            inventore quasi doloribus omnis earum officia consequatur ipsa.
-            Repellat quam animi iste ducimus!
-        </p>
-        <hr class="my-4" />
-        <p class="text-muted">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius rem
-            optio, blanditiis impedit explicabo nam, eum ab deserunt suscipit
-            non voluptatibus et tenetur! Esse, alias quam fugit sed illum
-            necessitatibus...
-        </p>
-        <br />
-        <p class="lead">
-            {% if request.user.is_engineer %}
-            <a
-                href="{% url 'ticket-queue' %}"
-                class="btn btn-outline-secondary"
-                role="button"
-                >Liste des réclamations</a
-            >
-            {% else%}
-            <a
-                href="{% url 'create-ticket' %}"
-                class="btn btn-outline-secondary"
-                role="button"
-                >Faire une réclamation</a
-            >
-            {% endif%}
-        </p>
+    {% if request.user.is_customer%}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h1 class="display-3 fw-bold lh-1 text-secondary">
+                    <b>Page d'Accueil CLIENT</b>
+                </h1>
+        
+                <p class="lead mt-4">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius autem
+                    maiores accusamus debitis expedita, explicabo qui dolores mollitia
+                    voluptatem, cum quis sed pariatur perspiciatis obcaecati neque amet
+                    quibusdam et deserunt. Ut sunt quisquam ullam, incidunt similique
+                    blanditiis! 
+                </p>
+                <hr class="my-4" />
+                <p class="text-muted">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius rem
+                    optio, blanditiis impedit explicabo nam,
+                </p>
+                <br />
+                    <a
+                        href="{% url 'create-ticket' %}"
+                        class="btn btn-outline-secondary"
+                        role="button"
+                        >Faire une réclamation</a
+                    >
+            </div>
+        </div>
+        <div class="col-md-6 border rounded-4 p-3 shadow-lg bg-light">
+            <h6 class="text-muted text-center border rounded-4 shadow p-2">Réclamations effectuées</h6>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">titre</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                        <tr>
+                            <th scope="row">
+                                <small>
+                                    {{ticket.ticket_number}}</th>
+                                </small>
+                            <td>
+                                <small>
+                                    {{ticket.title}}</td>
+                                </small>
+                            <td>
+                                <small>
+                                    {{ticket.date_created}}</td>
+                                </small>
+                            <td>
+                                <small>
+                                    {{ticket.ticket_status}}</td>
+                                </small>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    {% elif request.user.is_engineer%}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h1 class="display-3 fw-bold lh-1 text-secondary">
+                    <b>Page d'Accueil INGENIEUR</b>
+                </h1>
+        
+                <p class="lead mt-4">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius autem
+                    maiores accusamus debitis expedita, explicabo qui dolores mollitia
+                    voluptatem, cum quis sed pariatur perspiciatis obcaecati neque amet
+                    quibusdam et deserunt. Ut sunt quisquam ullam, incidunt similique
+                    blanditiis! 
+                </p>
+                <hr class="my-4" />
+                <p class="text-muted">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius rem
+                    optio, blanditiis impedit explicabo nam,
+                </p>
+                <br />
+                    <a
+                        href="{% url 'ticket-queue' %}"
+                        class="btn btn-outline-secondary"
+                        role="button"
+                        >Liste des réclamations</a
+                    >
+            </div>
+        </div>
+        <div class="col-md-6 border rounded-4 p-3 shadow-lg bg-light">
+            <h6 class="text-muted text-center border rounded-4 shadow p-2">Réclamations traités</h6>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">titre</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in eng_tickets %}
+                        <tr>
+                            <th scope="row">
+                                <small>
+                                    {{ticket.ticket_number}}</th>
+                                </small>
+                            <td>
+                                <small>
+                                    {{ticket.title}}</td>
+                                </small>
+                            <td>
+                                <small>
+                                    {{ticket.date_created}}</td>
+                                </small>
+                            <td>
+                                <small>
+                                    {{ticket.ticket_status}}</td>
+                                </small>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif%}
 </div>
 {%endblock content%} P

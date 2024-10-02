@@ -54,51 +54,67 @@
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                 >
-                                    <b>Tickets</b>
+                                    <b>Traitement des tickets</b>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    {% if request.user.is_engineer%}
                                     <li class="dropdown-item">
                                         <a
                                             class="nav-link"
-                                            href="{% url 'ticket-queue'%}"
+                                            href="{% url 'engineer-active-tickets'%}"
                                         >
-                                            <small> Ticket Queue</small></a
+                                            <small> Ticket en cours</small></a
                                         >
                                     </li>
+                                    <li class="dropdown-item">
+                                        <a
+                                            class="nav-link"
+                                            href="{% url 'engineer-closed-tickets'%}"
+                                        >
+                                            <small> Tickets cloturés</small></a
+                                        >
+                                    </li>
+                                    {% else %}
                                     <li class="dropdown-item">
                                         <a
                                             class="nav-link"
                                             href="{% url 'active-tickets'%}"
                                         >
-                                            <small> Active Tickets</small></a
+                                            <small> Ticket en cours</small></a
                                         >
                                     </li>
+                                    <li class="dropdown-item">
+                                        <a
+                                            class="nav-link"
+                                            href="{% url 'closed-tickets'%}"
+                                        >
+                                            <small> Tickets cloturés</small></a
+                                        >
+                                    </li>
+                                    > {% endif %}
                                 </ul>
-                            </li>
-
-                            <li class="nav-item">
-                                <small
-                                    class="nav-link disabled"
-                                    aria-disabled="true"
-                                >
-                                    {{request.user.username}} is logged ...
-                                </small>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <small class="text-muted">
+                            {{request.user.username}}
+                        </small>
+                    </div>
                     {%if request.user.is_authenticated %}
-
-                    <form class="d-flex" role="search">
-                        <a
-                            href="{% url 'logout' %}"
-                            class="btn btn-outline-success"
-                            role="button"
-                            >Log out</a
-                        >
-                    </form>
-                    {% endif %}
+                    <div class="col-md-7">
+                        <form class="d-flex">
+                            <a
+                                href="{% url 'logout' %}"
+                                class="btn btn-outline-success rounded-4"
+                                role="button"
+                                >Log out</a
+                            >
+                        </form>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </nav>

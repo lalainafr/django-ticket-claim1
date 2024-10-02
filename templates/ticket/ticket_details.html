@@ -1,4 +1,4 @@
-{% extends 'base.html'%} {% block content%}
+{% extends 'base.html'%} {% block content %}
 <div class="container">
     <div class="border p-4 bg-light shadow-lg mb-5 bg-white rounded">
         <div class="row">
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        {% if ticket.ticket_status == 'completed'%}
+        {% if ticket.ticket_status == 'Active' and request.user.is_engineer %}
         <div class="p-5">
             <a href="{% url 'resolve-ticket' ticket.id%}">
                 <button class="btn btn-outline-info">Mark as resolved</button>
@@ -82,18 +82,6 @@
         </div>
         {% endif %}
     </div>
+</div>
 
-    <!-- {% if ticket.resolution%}
-    <div class="card">
-        <div class="card-body shadow-sm">
-            <small> <b>Résolution</b>: </small>
-            <br />
-            <small>{{ticket.resolution}}</small>
-            <p />
-        </div>
-    </div>
-    {% elif request.user.is_engineer %}
-</div>
-    {% endif %} {%endblock content%}
-</div> -->
-</div>
+{% endblock content%}
