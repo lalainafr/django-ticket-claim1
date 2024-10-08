@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from users.models import User
 from .form import ResigterUserForm
 from django.contrib.auth.forms import *
+from django.core.mail import send_mail
+
 
 # registration
 def register_user(request):
@@ -18,6 +20,14 @@ def register_user(request):
     
             var.save()
             messages.success(request, 'Votre compte a été créé avec succès. Merci de vous authentifier...')
+            
+             # send mail
+            subject = f'Activation du compte de {var.username} #{var.id}'
+            message =  "Merci d'avoir créé votre compte ...  Afind de l'activer merci de cliquer sur le lien suivant"
+            email_from = 'lalaina@myself.com'
+            recipient_list = [var.email]
+            send_mail(subject, message, email_from, recipient_list)
+            
             return redirect('login')
         else:
             messages.warning(request, f'Echec lors la création du compte...')
